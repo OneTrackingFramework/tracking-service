@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import io.swagger.annotations.ApiParam;
+import one.tracking.framework.domain.Geocoord;
 import one.tracking.framework.dto.ContactEventUserDto;
 import one.tracking.framework.dto.InfectionDto;
 import one.tracking.framework.entity.Infection;
 import one.tracking.framework.entity.InfectionType;
 import one.tracking.framework.repo.InfectionRepository;
-import one.tracking.framework.util.Geocoord;
 
 /**
  * @author Marko Voß

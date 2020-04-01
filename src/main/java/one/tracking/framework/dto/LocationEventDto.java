@@ -1,8 +1,8 @@
 package one.tracking.framework.dto;
 
+import java.time.OffsetDateTime;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 import one.tracking.framework.entity.LocationEvent;
@@ -19,8 +19,9 @@ public class LocationEventDto {
   @Valid
   private GeoUnitDto longitude;
 
-  @Size(max = 250)
-  private String name;
+  private OffsetDateTime timestamp;
+
+  private Float accuracy;
 
   public static final LocationEventDto fromEntity(final GeoUnitType targetType, final LocationEvent event) {
     return LocationEventDto.builder()
@@ -30,7 +31,8 @@ public class LocationEventDto {
         .longitude(GeoUnitDto.builder().type(targetType)
             .value(targetType == GeoUnitType.RADIANS ? event.getLongitude() : Math.toDegrees(event.getLongitude()))
             .build())
-        .name(event.getName())
+        .accuracy(event.getAccuracy())
+        .timestamp(event.getTimestamp())
         .build();
   }
 }

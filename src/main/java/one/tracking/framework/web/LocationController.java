@@ -4,6 +4,7 @@
 package one.tracking.framework.web;
 
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,11 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.github.davidmoten.geo.GeoHash;
 import one.tracking.framework.dto.LocationEventDto;
-import one.tracking.framework.entity.LocationEvent;
-import one.tracking.framework.repo.LocationEventRepository;
-import one.tracking.framework.util.Geocoord;
+import one.tracking.framework.service.LocationEventService;
 
 /**
  * @author Marko Voß
@@ -26,36 +24,23 @@ import one.tracking.framework.util.Geocoord;
 public class LocationController {
 
   @Autowired
-  private LocationEventRepository locationEventRepository;
+  private LocationEventService service;
 
   @RequestMapping(method = RequestMethod.GET)
   public List<LocationEventDto> getLocations(
       @RequestParam("distance")
       final Double distance) {
 
-    final double distanceAlpha = (distance / Geocoord.EARTH_RADIUS) * (distance / Geocoord.EARTH_RADIUS);
-    // return
-    // this.locationEventRepository.findByDistanceAlpha(distanceAlpha).stream().map(LocationEventDto::fromEntity)
-    // .collect(Collectors.toList());
-    return null;
+    return this.service.getLocations(distance);
   }
 
   @RequestMapping(method = RequestMethod.POST)
   public void createLocation(
       @RequestBody
+      @Valid
       final LocationEventDto locationEvent,
       final Authentication authentication) {
 
-    final String geohash =
-        GeoHash.encodeHash(locationEvent.getLatitude().toDegrees(), locationEvent.getLongitude().toDegrees(), 11);
-
-    this.locationEventRepository.save(LocationEvent.builder()
-        .latitude(locationEvent.getLatitude().toRadians())
-        .longitude(locationEvent.getLongitude().toRadians())
-        .userId(authentication.getName())
-        .geoHash(geohash)
-        .boundary7(geohash.substring(0, 7))
-        .boundary8(geohash.substring(0, 8))
-        .build());
+    this.service.createLocation(authentication.getName(), locationEvent);
   }
 }

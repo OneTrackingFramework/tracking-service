@@ -116,7 +116,6 @@ public class BarCodeScannerStationController {
     this.locationEventRepository.save(LocationEvent.builder()
         .latitude(station.getLatitude())
         .longitude(station.getLongitude())
-        .name(station.getName())
         .userId(userId)
         .build());
   }

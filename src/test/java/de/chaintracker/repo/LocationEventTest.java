@@ -22,9 +22,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import de.chaintracker.config.TestConfig;
+import one.tracking.framework.domain.Geocoord;
 import one.tracking.framework.entity.LocationEvent;
 import one.tracking.framework.repo.LocationEventRepository;
-import one.tracking.framework.util.Geocoord;
 
 /**
  * @author Marko Voß
@@ -73,14 +73,12 @@ public class LocationEventTest {
     this.locationEventRepository.save(LocationEvent.builder()
         .latitude(coord.latitude())
         .longitude(coord.longitude())
-        .name("STATIC")
         .userId(user)
         .build());
 
     this.locationEventRepository.save(LocationEvent.builder()
         .latitude(coord2.latitude())
         .longitude(coord2.longitude())
-        .name("STATIC")
         .userId(user)
         .build());
 
@@ -114,13 +112,12 @@ public class LocationEventTest {
     for (int i = 1; i <= amount; i++) {
 
       final Geocoord randCoord = new Geocoord(
-          getRandom(center.getLatitudeDecimal()),
-          getRandom(center.getLongitudeDecimal()));
+          getRandom(center.getLatitudeDegrees()),
+          getRandom(center.getLongitudeDegrees()));
 
       buffer.add(LocationEvent.builder()
           .latitude(randCoord.latitude())
           .longitude(randCoord.longitude())
-          .name("RANDOM")
           .userId(user)
           .build());
 

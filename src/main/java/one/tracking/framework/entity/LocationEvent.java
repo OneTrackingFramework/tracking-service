@@ -63,6 +63,9 @@ public class LocationEvent {
   @Column(nullable = false)
   private Double longitude;
 
+  @Column(nullable = false)
+  private Float accuracy;
+
   @Column(length = 11)
   private String geoHash;
 
@@ -72,15 +75,18 @@ public class LocationEvent {
   @Column(length = 7)
   private String boundary7;
 
-  @Column(name = "timestamp_create", columnDefinition = "TIMESTAMP WITH TIME ZONE")
-  private OffsetDateTime timestampCreate;
-
-  @Column(length = 250)
-  private String name;
+  @Column(name = "timestamp", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+  private OffsetDateTime timestamp;
 
   @PrePersist
   void onPrePersist() {
-    if (this.id == null)
-      setTimestampCreate(OffsetDateTime.now());
+    if (this.id == null && this.timestamp == null)
+      setTimestamp(OffsetDateTime.now());
+    if (this.accuracy == null)
+      setAccuracy(0f);
+    if (this.boundary7 == null && this.geoHash != null)
+      setBoundary7(this.geoHash.substring(0, 7));
+    if (this.boundary8 == null && this.geoHash != null)
+      setBoundary8(this.geoHash.substring(0, 8));
   }
 }

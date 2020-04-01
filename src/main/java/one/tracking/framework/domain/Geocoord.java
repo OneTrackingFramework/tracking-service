@@ -1,8 +1,9 @@
 /**
  *
  */
-package one.tracking.framework.util;
+package one.tracking.framework.domain;
 
+import com.github.davidmoten.geo.GeoHash;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -22,15 +23,15 @@ public class Geocoord {
    */
   public static final double EARTH_RADIUS = 6371009;
 
-  private final double latitudeDecimal;
-  private final double longitudeDecimal;
+  private final double latitudeDegrees;
+  private final double longitudeDegrees;
 
   public double latitude() {
-    return Math.toRadians(this.latitudeDecimal);
+    return Math.toRadians(this.latitudeDegrees);
   }
 
   public double longitude() {
-    return Math.toRadians(this.longitudeDecimal);
+    return Math.toRadians(this.longitudeDegrees);
   }
 
   /**
@@ -73,6 +74,10 @@ public class Geocoord {
 
   @Override
   public String toString() {
-    return "[" + this.latitudeDecimal + ", " + this.longitudeDecimal + "]";
+    return "[" + this.latitudeDegrees + ", " + this.longitudeDegrees + "]";
+  }
+
+  public String toGeoHash(final int precision) {
+    return GeoHash.encodeHash(this.latitudeDegrees, this.longitudeDegrees, 11);
   }
 }

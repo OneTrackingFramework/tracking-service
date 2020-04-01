@@ -56,7 +56,7 @@ public class ContactEventController {
     final LocationEvent locationEvent = this.locationEventRepository.save(LocationEvent.builder()
         .latitude(contactEvent.getLocationEvent().getLatitude().toRadians())
         .longitude(contactEvent.getLocationEvent().getLongitude().toRadians())
-        .name(contactEvent.getLocationEvent().getName())
+        .accuracy(contactEvent.getLocationEvent().getAccuracy())
         .userId(authentication.getName())
         .build());
 
