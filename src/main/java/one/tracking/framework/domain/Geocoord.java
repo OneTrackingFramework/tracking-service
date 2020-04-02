@@ -78,6 +78,6 @@ public class Geocoord {
   }
 
   public String toGeoHash(final int precision) {
-    return GeoHash.encodeHash(this.latitudeDegrees, this.longitudeDegrees, 11);
+    return GeoHash.encodeHash(this.latitudeDegrees, this.longitudeDegrees, precision);
   }
 }
