@@ -52,9 +52,12 @@ public class TestDataService {
   @EventListener
   public void onApplicationEvent(final ApplicationStartedEvent event) throws JsonProcessingException {
     createRandomLocations();
+
   }
 
-
+  /**
+   *
+   */
   private void createRandomLocations() {
 
     final ObjectWriter writer = this.objectMapper.writerWithDefaultPrettyPrinter();
@@ -86,16 +89,6 @@ public class TestDataService {
 
     final double distance = a.distanceTo(b); // in meters
     LOG.info("Created locations with distance of {} meters", distance);
-
-    LOG.info("Found close locations for this distance:");
-    this.locationEventService.findCloseLocations(distance).stream()
-        .forEach(t -> {
-          try {
-            LOG.info(writer.writeValueAsString(t));
-          } catch (final JsonProcessingException e) {
-            LOG.error(e.getMessage(), e);
-          }
-        });
 
     final int amount = 100000;
 

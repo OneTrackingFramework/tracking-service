@@ -1,6 +1,7 @@
 package one.tracking.framework.dto;
 
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import lombok.Builder;
@@ -32,7 +33,7 @@ public class LocationEventDto {
             .value(targetType == GeoUnitType.RADIANS ? event.getLongitude() : Math.toDegrees(event.getLongitude()))
             .build())
         .accuracy(event.getAccuracy())
-        .timestamp(event.getTimestamp())
+        .timestamp(event.getTimestampCreate().atOffset(ZoneOffset.ofTotalSeconds(event.getTimestampOffset())))
         .build();
   }
 }
