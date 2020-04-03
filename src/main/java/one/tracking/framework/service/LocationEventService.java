@@ -26,10 +26,10 @@ public class LocationEventService {
   private LocationEventRepository locationEventRepository;
 
   public Collection<DistanceSearchResult> findLocations(final String userId, final Double distanceMeters,
-      final Integer timediffSeconds) {
+      final Integer timediffSeconds, final Integer lookingBackDays) {
 
-    final List<DistanceSearchResult> results =
-        this.locationEventRepository.findByUserIdAndDistanceAndTimediff(userId, distanceMeters, timediffSeconds);
+    final List<DistanceSearchResult> results = this.locationEventRepository.findByUserIdAndDistanceAndTimediff(
+        userId, distanceMeters, timediffSeconds, lookingBackDays);
 
     final Map<String, DistanceSearchResult> userIdMap = new HashMap<>();
 

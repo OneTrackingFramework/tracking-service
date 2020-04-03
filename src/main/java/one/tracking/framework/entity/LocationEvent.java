@@ -59,14 +59,14 @@ import one.tracking.framework.domain.DistanceSearchResult;
             + "    WHERE e1.USER_ID <> e2.USER_ID"
             + "     AND e1.BOUNDARY8 = e2.BOUNDARY8"
             + "        AND e1.TIMESTAMP_CREATE <= CURRENT_TIMESTAMP()"
-            + "        AND e1.TIMESTAMP_CREATE >= DATEADD('WEEK', -2, CURRENT_TIMESTAMP())"
+            + "        AND e1.TIMESTAMP_CREATE >= DATEADD('DAY', -?4, CURRENT_TIMESTAMP())"
             + "        AND e2.TIMESTAMP_CREATE <= CURRENT_TIMESTAMP()"
-            + "        AND e2.TIMESTAMP_CREATE >= DATEADD('WEEK', -2, CURRENT_TIMESTAMP())"
-            + "        AND (e1.TIMESTAMP_CREATE >= DATEADD('MINUTE', -10, e2.TIMESTAMP_CREATE) OR e1.TIMESTAMP_CREATE <= DATEADD('MINUTE',  10, e2.TIMESTAMP_CREATE))"
-            + "        AND e1.USER_ID = ?"
+            + "        AND e2.TIMESTAMP_CREATE >= DATEADD('DAY', -?4, CURRENT_TIMESTAMP())"
+            + "        AND (e1.TIMESTAMP_CREATE >= DATEADD('MINUTE', -?3, e2.TIMESTAMP_CREATE) OR e1.TIMESTAMP_CREATE <= DATEADD('MINUTE',  ?3, e2.TIMESTAMP_CREATE))"
+            + "        AND e1.USER_ID = ?1"
             + ") x "
-            + "WHERE x.DISTANCE <= ?"
-            + " AND x.TIMEDIFF <= ?",
+            + "WHERE x.DISTANCE <= ?2"
+            + " AND x.TIMEDIFF <= ?3",
         resultSetMapping = "DistanceSearchResult")
 })
 @SqlResultSetMapping(name = "DistanceSearchResult", classes = {

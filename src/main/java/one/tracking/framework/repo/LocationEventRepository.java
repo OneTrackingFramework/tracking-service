@@ -17,5 +17,5 @@ public interface LocationEventRepository extends CrudRepository<LocationEvent, S
 
   @Query(nativeQuery = true)
   List<DistanceSearchResult> findByUserIdAndDistanceAndTimediff(
-      String userId, double distanceMeters, int timediffSeconds);
+      String userId, double distanceMeters, int timediffSeconds, Integer lookingBackDays);
 }

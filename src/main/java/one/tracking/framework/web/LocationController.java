@@ -34,9 +34,11 @@ public class LocationController {
       @RequestParam("distance")
       final Double distanceMeters,
       @RequestParam("timediff")
-      final Integer timediffSeconds) {
+      final Integer timediffSeconds,
+      @RequestParam("lookingBackDays")
+      final Integer lookingBackDays) {
 
-    return this.service.findLocations(userId, distanceMeters, timediffSeconds);
+    return this.service.findLocations(userId, distanceMeters, timediffSeconds, lookingBackDays);
   }
 
   @RequestMapping(method = RequestMethod.POST)
